@@ -6,9 +6,46 @@ const userRole = document.querySelector(".role")
 
 let userDetail = JSON.parse( sessionStorage.getItem("userDetail"))
 
+if (userDetail) {
+    displayProfile(userDetail);
+} else {
+    let loginToken = JSON.parse(localStorage.getItem("loginToken"));
+    if (loginToken) {
+        let userProfile;
 
-userImg.src = userDetail.avatar
-userId.innerText = `Id: ${userDetail.id}`
-userName.innerText = `Name: ${userDetail.name}`
-userRole.innerText = `Role: ${userDetail.role}`
+        fetch(`https://api.escuelajs.co/api/v1/auth/profile`,{
+            method: "GET",
+            headers : {
+        Authorization: `Bearer ${loginToken.access_token}`
+        }})
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                } else {
+                    alert("Sorry password is incorrect!");
+                    window.location.href = "login.html";}
+            })
+            .then (data => { 
+                console.log(data)
+                userProfile = data; 
+                displayProfile(userProfile);})
+            .catch((err) => console.log(err));
+    } else { window.location.href = "login.html"; }
+}
+
+
+
+
+    
+
+
+
+function displayProfile (profile) {
+    alert(`Welcome back ${profile.name}`)
+
+    userImg.src = profile.avatar
+    userId.textContent = profile.id
+    userName.textContent = profile.name
+    userRole.textContent = profile.role
+}
 

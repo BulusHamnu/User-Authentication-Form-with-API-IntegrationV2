@@ -15,20 +15,9 @@ async function loginUser() {
     })
     
    let data = await response.json()
-   let getAuth = await fetch(`https://api.escuelajs.co/api/v1/auth/profile`,{
-       method: "GET",
-       headers : {
-  Authorization: `Bearer ${data.access_token}`
-}
-
-})
-    let profileResponse = await getAuth.json();
-    
-       
-    alert(`Welcome back ${profileResponse.name}`)
-   
-   sessionStorage.setItem("userDetail", JSON.stringify(profileResponse))
-    window.location.href = "profile.html"
+   localStorage.setItem("loginToken", JSON.stringify(data))
+   console.log(data.access_token)
+   window.location.href = "profile.html"
 
  
 }
