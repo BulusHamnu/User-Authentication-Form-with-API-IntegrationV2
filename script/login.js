@@ -24,8 +24,11 @@ async function loginUser() {
     
 
 loginBtn.addEventListener("click", function () {
-    console.log("Log-in")
-    loginUser()
+    if (loginEmailBox.value === "" || loginPasswordBox.value === "") {
+        alert("Please fill in the form")
+    } else {
+        loginUser()
+    }
 }) 
 
 

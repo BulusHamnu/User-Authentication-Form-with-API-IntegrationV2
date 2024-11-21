@@ -49,7 +49,12 @@ signUpBtn.addEventListener("click", function () {
                 existBar.innerHTML = "Email already exist!"
                 emailBox.style.border = "1px solid red"
             } else if (data.isAvailable == false && passwordBox.value === cPasswordBox.value ) {
-                createNewUser()
+                if (emailBox.value === "" || passwordBox.value === "" || cPasswordBox.value === "") {
+                    alert("Please fill in the form")
+                } else {
+                    createNewUser()
+                }
+                
             } else {
                 passwordBox.style.border = "1px solid red";
                 cPasswordBox.style.border = "1px solid red";
